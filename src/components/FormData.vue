@@ -330,6 +330,7 @@ export default {
       provinces: [],
       showPreviewModal: false,
       isFormValid: false,
+      cachedData: {},
     };
   },
   mounted() {
@@ -338,11 +339,14 @@ export default {
   methods: {
     async fetchProvinces() {
       try {
-        const response = await fetch(
-          "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
-        );
-        const provinces = await response.json();
-        this.provinces = provinces;
+        if (!this.cachedData.provinces) {
+          const response = await fetch(
+            "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
+          );
+          const provinces = await response.json();
+          this.cachedData.provinces = provinces;
+        }
+        this.provinces = this.cachedData.provinces;
       } catch (error) {
         console.error("Error fetching provinces:", error);
       }
