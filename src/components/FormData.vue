@@ -25,6 +25,7 @@
             class="form-control"
             id="umur"
             v-model="formData.Umur"
+            min="25"
             required
           />
         </div>
